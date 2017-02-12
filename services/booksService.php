@@ -19,9 +19,13 @@ if (isset($_REQUEST["book"])) {
 if (isset($_REQUEST["search"])) {
     $searchPhrase = $_REQUEST["search"];
 }
+if (isset($_REQUEST["sort"])) {
+    $sort = $_REQUEST["sort"];
+}
+
 $books = null;
 if ($bookId === null) {
-    $books = $database->getSomeBooks($from, $size, $searchPhrase, null);
+    $books = $database->getSomeBooks($from, $size, $searchPhrase, $sort);
     echo $books === null ? "No books found!" : json_encode($books);
 } else {
     $book = $database->getBookInfo($bookId);

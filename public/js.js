@@ -1,6 +1,8 @@
 var booksArray = [];
 var page = 0;
 var pageSize = 10;
+var searchPhrase = "";
+var sort = "name";
 
 var showBooksList = () => {
     var content = document.getElementById('content');
@@ -40,11 +42,20 @@ var showBooksList = () => {
 
     var pagesNav = document.createElement('div');
     pagesNav.setAttribute('id', 'pages_nav');
+    
+    var next = document.createElement('button');
+    next.setAttribute('id', 'pages_nav_next');
+    next.innerText = 'Next page'
 
-    var pagesNav = document.createElement('div');
-    pagesNav.setAttribute('id', 'pages_nav');
-
+    next.onclick = () => {
+        page += 1;
+        getBooks();
+    }
+    
+    pagesNav.innerHTML += page;
+    pagesNav.appendChild(next);
     content.appendChild(booksListContainer);
+    content.appendChild(pagesNav);
 }
 
 var showBookPage = (bookInfo) => {
@@ -70,14 +81,24 @@ var showBookPage = (bookInfo) => {
     bookGenre.setAttribute('id', 'book_genre');
     bookGenre.innerText = bookInfo.genre;
 
+    var backButton = document.createElement('button');
+    backButton.setAttribute('id', 'back_button');
+    backButton.innerText = 'Back';
+
+    backButton.onclick = () => {
+        getBooks();
+    }
+
     bookContainer.appendChild(bookHeader);
     bookContainer.appendChild(bookAuthor);
     bookContainer.appendChild(bookYear);
     bookContainer.appendChild(bookGenre);
+    bookContainer.appendChild(backButton);
     content.appendChild(bookContainer);
 }
 
 var getBooks = () => {
+    sort = document.getElementById('select_sort').value;
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -89,7 +110,7 @@ var getBooks = () => {
             }
         }
     }
-    xmlhttp.open('GET', `./services/booksService.php?page=${page}&size=${pageSize}`, true);
+    xmlhttp.open('GET', `./services/booksService.php?page=${page}&size=${pageSize}&sort=${sort}`, true);
     xmlhttp.send();
 }
 

@@ -27,14 +27,16 @@ class MySQLDB {
 
     function getSomeBooks($row, $amount, $phrase, $sorting) {
         $q = "SELECT * FROM " . TBL_BOOKS;
-        // echo $phrase;
+
+        if($sorting !== null) {
+            $q .= " ORDER BY $sorting";
+        }
         if ($phrase !== null) {
-            $q .= " WHERE name = '". $phrase ."'";
+            $q .= " WHERE name = '" . $phrase . "'";
         }
         if ($row !== null && $amount !== null) {
-            $q .= " LIMIT ". $row . " , ". $amount;
+            $q .= " LIMIT " . $row . " , ". $amount;
         }
-        // echo $q;
         
         mysqli_set_charset($this->connection, "utf8");
         $result = mysqli_query($this->connection, $q);
