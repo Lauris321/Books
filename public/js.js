@@ -1,4 +1,6 @@
 var booksArray = [];
+var page = 0;
+var pageSize = 10;
 
 var showBooksList = () => {
     var content = document.getElementById('content');
@@ -35,6 +37,13 @@ var showBooksList = () => {
         line.appendChild(lineGenre);
         booksListContainer.appendChild(line);
     });
+
+    var pagesNav = document.createElement('div');
+    pagesNav.setAttribute('id', 'pages_nav');
+
+    var pagesNav = document.createElement('div');
+    pagesNav.setAttribute('id', 'pages_nav');
+
     content.appendChild(booksListContainer);
 }
 
@@ -49,26 +58,26 @@ var showBookPage = (bookInfo) => {
     bookHeader.setAttribute('id', 'book_header');
     bookHeader.innerText = bookInfo.name;
 
-    var bookYear = document.createElement('div');
-    bookYear.setAttribute('id', 'book_year');
-    bookYear.innerText = bookInfo.year;
-
     var bookAuthor = document.createElement('div');
     bookAuthor.setAttribute('id', 'book_author');
-    bookAuthor.innerText = bookInfo.author;
+    bookAuthor.innerHTML = `Written by: <b>${bookInfo.author}</b>`;
+
+    var bookYear = document.createElement('div');
+    bookYear.setAttribute('id', 'book_year');
+    bookYear.innerHTML = `Publishing year: <b>${bookInfo.year}</b>`;
 
     var bookGenre = document.createElement('div');
     bookGenre.setAttribute('id', 'book_genre');
     bookGenre.innerText = bookInfo.genre;
 
     bookContainer.appendChild(bookHeader);
-    bookContainer.appendChild(bookYear);
     bookContainer.appendChild(bookAuthor);
+    bookContainer.appendChild(bookYear);
     bookContainer.appendChild(bookGenre);
     content.appendChild(bookContainer);
 }
 
-var getBooks = (page, size) => {
+var getBooks = () => {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -80,7 +89,7 @@ var getBooks = (page, size) => {
             }
         }
     }
-    xmlhttp.open('GET', `./services/booksService.php?page=${page}&size=${size}`, true);
+    xmlhttp.open('GET', `./services/booksService.php?page=${page}&size=${pageSize}`, true);
     xmlhttp.send();
 }
 
@@ -93,7 +102,6 @@ var getBookDesc = (id) => {
             } else {
                 var bookInfo = JSON.parse(this.responseText);
                 showBookPage(bookInfo);
-                // document.getElementById('books_list').innerText = this.responseText;
             }
         }
     }
@@ -101,4 +109,4 @@ var getBookDesc = (id) => {
     xmlhttp.send();
 }
 
-getBooks(0, 10);
+getBooks();

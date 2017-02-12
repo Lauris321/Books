@@ -25,8 +25,17 @@ class MySQLDB {
         return $dbarray;
     }
 
-    function getSomeBooks($row, $amount) {
-        $q = "SELECT * FROM " . TBL_BOOKS . " LIMIT ". $row . " , ". $amount;
+    function getSomeBooks($row, $amount, $phrase, $sorting) {
+        $q = "SELECT * FROM " . TBL_BOOKS;
+        // echo $phrase;
+        if ($phrase !== null) {
+            $q .= " WHERE name = '". $phrase ."'";
+        }
+        if ($row !== null && $amount !== null) {
+            $q .= " LIMIT ". $row . " , ". $amount;
+        }
+        // echo $q;
+        
         mysqli_set_charset($this->connection, "utf8");
         $result = mysqli_query($this->connection, $q);
         
@@ -41,20 +50,20 @@ class MySQLDB {
         return $array;
     }
 
-    function getAllBooks() {
-        $q = "SELECT * FROM " . TBL_BOOKS;
-        mysqli_set_charset($this->connection, "utf8");
-        $result = mysqli_query($this->connection, $q);
+    // function getAllBooks() {
+    //     $q = "SELECT * FROM " . TBL_BOOKS;
+    //     mysqli_set_charset($this->connection, "utf8");
+    //     $result = mysqli_query($this->connection, $q);
         
-        if (!$result || (mysqli_num_rows($result) < 1)) {
-            return NULL;
-        }
+    //     if (!$result || (mysqli_num_rows($result) < 1)) {
+    //         return NULL;
+    //     }
         
-        while($row = mysqli_fetch_assoc($result)){
-            $array[] = $row;
-        }
-        return $array;
-    }
+    //     while($row = mysqli_fetch_assoc($result)){
+    //         $array[] = $row;
+    //     }
+    //     return $array;
+    // }
 
     function getNumBooks() {
         $q = "SELECT FROM " . TBL_BOOKS;
