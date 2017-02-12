@@ -15,15 +15,13 @@ class MySQLDB {
     }
 
     function getBookInfo($id) {
-        $q = "SELECT * FROM " . TBL_BOOKS . " WHERE id = '$id'";
+        $q = "SELECT * FROM " . TBL_BOOKS . " WHERE id = " . $id;
         $result = mysqli_query($this->connection, $q);
-        // echo $q;
         if (!$result || (mysqli_num_rows($result) < 1)) {
             return NULL;
         }
         
         $dbarray = mysqli_fetch_array($result);
-        // echo print_r($dbarray, true);
         return $dbarray;
     }
 
