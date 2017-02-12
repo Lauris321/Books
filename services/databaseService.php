@@ -51,28 +51,6 @@ class MySQLDB {
         }
         return $array;
     }
-
-    // function getAllBooks() {
-    //     $q = "SELECT * FROM " . TBL_BOOKS;
-    //     mysqli_set_charset($this->connection, "utf8");
-    //     $result = mysqli_query($this->connection, $q);
-        
-    //     if (!$result || (mysqli_num_rows($result) < 1)) {
-    //         return NULL;
-    //     }
-        
-    //     while($row = mysqli_fetch_assoc($result)){
-    //         $array[] = $row;
-    //     }
-    //     return $array;
-    // }
-
-    function getNumBooks() {
-        $q = "SELECT FROM " . TBL_BOOKS;
-        $result = mysqli_query($this->connection, $q);
-        $num_members = $result;
-        return $num_members;
-    }
 }
     
 $database = new MySQLDB;
