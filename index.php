@@ -4,7 +4,7 @@
         <link rel="stylesheet" type="text/css" href="./public/styles.css">
     </head>
     <body>
-        <div id = "books_list"></div>
+        <content id = 'content'></content>
     </body>
     <script src = "./public/js.js"></script>
 </html>

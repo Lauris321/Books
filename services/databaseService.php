@@ -57,13 +57,12 @@ class MySQLDB {
     }
 
     function getNumBooks() {
-        $q = "SELECT * FROM " . TBL_BOOKS;
+        $q = "SELECT FROM " . TBL_BOOKS;
         $result = mysqli_query($this->connection, $q);
         $num_members = $result;
         return $num_members;
     }
 }
-
     
 $database = new MySQLDB;
 ?>
